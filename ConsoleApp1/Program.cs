@@ -6,28 +6,27 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string test = MorseCodeDecoder.Decode(".... . -.--   .--- ..- -.. .");
+            int test = Kata.GetVowelCount("abracadabra");
             Console.WriteLine(test);
 
             Console.ReadKey();
         }
 
-        class MorseCodeDecoder
+        public static class Kata
         {
-            public static string Decode(string morseCode)
+            public static int GetVowelCount(string str)
             {
-                morseCode = morseCode.Trim().Replace("   ", " | ");
-                string[] arrMorse = morseCode.Split(" ");
+                int vowelCount = 0;
+                char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
+                char[] letters = str.ToCharArray();
 
-                for (int i = 0; i < arrMorse.Length; i++)
+                foreach (char letter in letters)
                 {
-                    if (arrMorse[i] != "|")
-                        arrMorse[i] = MorseCode.Get(arrMorse[i]);
-                    else
-                        arrMorse[i] = " ";
+                    if (Array.Exists(vowels, element => element == letter))
+                        vowelCount++;
                 }
 
-                return String.Join("", arrMorse);
+                return vowelCount;
             }
         }
     }
