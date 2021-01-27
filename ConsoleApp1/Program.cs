@@ -6,26 +6,28 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int test = SquareDigits(9119);
+            string test = Accum("ZpglnRxqenU");
             Console.WriteLine(test);
 
             Console.ReadKey();
         }
 
-        public static int SquareDigits(int n)
+        public static string Accum(string s)
         {
-            int result = 0;
-            int i = 0;
+            char[] dynS = s.ToCharArray();
+            string[] dynResult = new string[dynS.Length];
 
-            do
+            for(int i = 0; i < dynS.Length; i++) 
             {
-                int m = n % 10;
-                result += (int)(Math.Pow(m, 2) * Math.Pow(10, i));
-                i = (m > 3) ? i + 2 : i + 1;
-                n /= 10;
-            } while (n > 0);
+                for (int j = 0; j <= i; j++)
+                { 
+                    char letter = dynS[i];
+                    letter = (j == 0) ? Char.ToUpper(letter) : Char.ToLower(letter);
+                    dynResult[i] += letter;
+                }
+            }
 
-            return result;
+            return String.Join("-", dynResult);
         }
     }
 }
