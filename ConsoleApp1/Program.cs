@@ -6,34 +6,26 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string test = SpinWords("Hey fellow warriors");
+            int test = SquareDigits(9119);
             Console.WriteLine(test);
 
             Console.ReadKey();
         }
 
-        static string SpinWords(string sentence)
+        public static int SquareDigits(int n)
         {
-            string[] arrSentence = sentence.Split(" ");
-            
-            for (int i = 0; i < arrSentence.Length; i++)
-            { 
-                char[] arrWord = arrSentence[i].ToCharArray();
-                if (arrWord.Length >= 5)
-                {
-                    string newWord = "";
-                    for (int j = arrWord.Length - 1; j >= 0; j--)
-                    {
-                        newWord += arrWord[j];
-                    }
-                    arrSentence[i] = newWord;
-                }
-            }
+            int result = 0;
+            int i = 0;
 
-            return String.Join(" ", arrSentence);
+            do
+            {
+                int m = n % 10;
+                result += (int)(Math.Pow(m, 2) * Math.Pow(10, i));
+                i = (m > 3) ? i + 2 : i + 1;
+                n /= 10;
+            } while (n > 0);
+
+            return result;
         }
     }
 }
-
-
-
