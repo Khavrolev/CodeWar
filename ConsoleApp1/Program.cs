@@ -6,26 +6,29 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int test = SquareDigits(9119);
+            string test = MorseCodeDecoder.Decode(".... . -.--   .--- ..- -.. .");
             Console.WriteLine(test);
 
             Console.ReadKey();
         }
 
-        public static int SquareDigits(int n)
+        class MorseCodeDecoder
         {
-            int result = 0;
-            int i = 0;
-
-            do
+            public static string Decode(string morseCode)
             {
-                int m = n % 10;
-                result += (int)(Math.Pow(m, 2) * Math.Pow(10, i));
-                i = (m > 3) ? i + 2 : i + 1;
-                n /= 10;
-            } while (n > 0);
+                morseCode = morseCode.Trim().Replace("   ", " | ");
+                string[] arrMorse = morseCode.Split(" ");
 
-            return result;
+                for (int i = 0; i < arrMorse.Length; i++)
+                {
+                    if (arrMorse[i] != "|")
+                        arrMorse[i] = MorseCode.Get(arrMorse[i]);
+                    else
+                        arrMorse[i] = " ";
+                }
+
+                return String.Join("", arrMorse);
+            }
         }
     }
 }
