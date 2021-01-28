@@ -6,28 +6,28 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string test = Accum("ZpglnRxqenU");
+            int test = Kata.GetVowelCount("abracadabra");
             Console.WriteLine(test);
 
             Console.ReadKey();
         }
 
-        public static string Accum(string s)
+        public static class Kata
         {
-            char[] dynS = s.ToCharArray();
-            string[] dynResult = new string[dynS.Length];
-
-            for(int i = 0; i < dynS.Length; i++) 
+            public static int GetVowelCount(string str)
             {
-                for (int j = 0; j <= i; j++)
-                { 
-                    char letter = dynS[i];
-                    letter = (j == 0) ? Char.ToUpper(letter) : Char.ToLower(letter);
-                    dynResult[i] += letter;
-                }
-            }
+                int vowelCount = 0;
+                char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
+                char[] letters = str.ToCharArray();
 
-            return String.Join("-", dynResult);
+                foreach (char letter in letters)
+                {
+                    if (Array.Exists(vowels, element => element == letter))
+                        vowelCount++;
+                }
+
+                return vowelCount;
+            }
         }
     }
 }
