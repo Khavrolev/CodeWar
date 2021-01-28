@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleApp1
 {
@@ -6,7 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int test = Kata.GetVowelCount("abracadabra");
+            IEnumerable<string> test = Kata.OpenOrSenior(new[] { new[] { 45, 12 }, new[] { 55, 21 }, new[] { 19, 2 }, new[] { 104, 20 } });
             Console.WriteLine(test);
 
             Console.ReadKey();
@@ -14,19 +16,19 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static int GetVowelCount(string str)
+            public static IEnumerable<string> OpenOrSenior(int[][] data)
             {
-                int vowelCount = 0;
-                char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
-                char[] letters = str.ToCharArray();
-
-                foreach (char letter in letters)
+                List<string> status = new List<string>();
+                foreach (int[] person in data)
                 {
-                    if (Array.Exists(vowels, element => element == letter))
-                        vowelCount++;
+                    if (person[0] >= 55 && person[1] > 7)
+                        status.Add("Senior");
+                    else
+                        status.Add("Open");
                 }
+                IEnumerable<string> ie = status;
 
-                return vowelCount;
+                return ie;
             }
         }
     }
