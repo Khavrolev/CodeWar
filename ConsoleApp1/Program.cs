@@ -8,7 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            IEnumerable<string> test = Kata.OpenOrSenior(new[] { new[] { 45, 12 }, new[] { 55, 21 }, new[] { 19, 2 }, new[] { 104, 20 } });
+            string test = Kata.MakeComplement("AAAA");
             Console.WriteLine(test);
 
             Console.ReadKey();
@@ -16,19 +16,15 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static IEnumerable<string> OpenOrSenior(int[][] data)
+            public static string MakeComplement(string dna)
             {
-                List<string> status = new List<string>();
-                foreach (int[] person in data)
+                char[] code = dna.ToCharArray();
+                string side = "";
+                foreach (char letter in code)
                 {
-                    if (person[0] >= 55 && person[1] > 7)
-                        status.Add("Senior");
-                    else
-                        status.Add("Open");
+                    side += (letter == 'A') ? 'T' : (letter == 'T') ? 'A' : (letter == 'C') ? 'G' : (letter == 'G') ? 'C' : 'K';
                 }
-                IEnumerable<string> ie = status;
-
-                return ie;
+                return side;
             }
         }
     }
