@@ -8,7 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int test = Kata.MaxSequence(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 });
+            string test = Kata.High("what time are we climbing up to the volcano");
             Console.WriteLine(test);
 
             Console.ReadKey();
@@ -16,20 +16,29 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static int MaxSequence(int[] arr)
+            public static string High(string s)
             {
-                int sum = 0;
-                for (int i = 0; i < arr.Length; i++)
+                string[] words = s.Split(" ");
+                int max = 0;
+                string result = "";
+
+                foreach (string w in words)
                 {
-                    int preSum = 0;
-                    for (int j = i; j < arr.Length; j++)
+                    int sum = 0;
+                    char[] letters = w.ToCharArray();
+
+                    foreach (char l in letters)
                     {
-                        preSum += arr[j];
-                        if (preSum > sum)
-                            sum = preSum;
+                        sum += (int)l - 96;
+                    }
+
+                    if (sum > max) { 
+                        result = w;
+                        max = sum;
                     }
                 }
-                return sum;
+
+                return result;
             }
         }
     }
