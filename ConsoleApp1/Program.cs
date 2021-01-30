@@ -8,37 +8,39 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string test = Kata.High("what time are we climbing up to the volcano");
-            Console.WriteLine(test);
+            string[] test = Kata.inArray(new string[] { "arp", "live", "strong" }, new string[] { "lively", "alive", "harp", "sharp", "armstrong" });
+//            Console.WriteLine(test);
+            foreach (string t in test)
+            {
+                Console.Write(t + " ");
+            }
+
 
             Console.ReadKey();
         }
 
         public static class Kata
         {
-            public static string High(string s)
+            public static string[] inArray(string[] array1, string[] array2)
             {
-                string[] words = s.Split(" ");
-                int max = 0;
-                string result = "";
+                List<string> res = new List<string>();
 
-                foreach (string w in words)
+                foreach (string sub in array1)
                 {
-                    int sum = 0;
-                    char[] letters = w.ToCharArray();
-
-                    foreach (char l in letters)
+                    foreach (string word in array2)
                     {
-                        sum += (int)l - 96;
-                    }
-
-                    if (sum > max) { 
-                        result = w;
-                        max = sum;
+                        if (word.Contains(sub))
+                        {
+                            res.Add(sub);
+                            break;
+                        }   
                     }
                 }
 
-                return result;
+                string[] arr = res.ToArray();
+                Array.Sort(arr);
+
+                return arr;
             }
         }
     }
