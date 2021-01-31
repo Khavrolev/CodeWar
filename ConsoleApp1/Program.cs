@@ -8,12 +8,12 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string[] test = Kata.inArray(new string[] { "arp", "live", "strong" }, new string[] { "lively", "alive", "harp", "sharp", "armstrong" });
-//            Console.WriteLine(test);
-            foreach (string t in test)
-            {
-                Console.Write(t + " ");
-            }
+            int test = Kata.bouncingBall(3.0, 0.66, 1.5);
+            Console.WriteLine(test);
+            //foreach (string t in test)
+            //{
+            //    Console.Write(t + " ");
+            //}
 
 
             Console.ReadKey();
@@ -21,26 +21,21 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static string[] inArray(string[] array1, string[] array2)
+            public static int bouncingBall(double h, double bounce, double window)
             {
-                List<string> res = new List<string>();
+                if (h <= 0 || bounce <= 0 || bounce >= 1 || window >= h)
+                    return -1;
 
-                foreach (string sub in array1)
+                int result = 1;
+                h *= bounce;
+
+                while (h > window)
                 {
-                    foreach (string word in array2)
-                    {
-                        if (word.Contains(sub))
-                        {
-                            res.Add(sub);
-                            break;
-                        }   
-                    }
+                    result += 2;
+                    h *= bounce;
                 }
 
-                string[] arr = res.ToArray();
-                Array.Sort(arr);
-
-                return arr;
+                return result;
             }
         }
     }
