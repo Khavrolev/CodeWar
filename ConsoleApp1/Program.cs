@@ -8,7 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int test = Kata.CountSmileys(new string[] { ":D", ":~)", ";~D", ":)" });
+            string test = Kata.StripComments("a #b\nc\nd $e f g", new string[] { "#", "$" });
             Console.WriteLine(test);
             //foreach (string t in test)
             //{
@@ -21,41 +21,24 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static int CountSmileys(string[] smileys)
+            public static string StripComments(string text, string[] commentSymbols)
             {
-                if (smileys.Length == 0)
-                    return 0;
+                string[] lines = text.Split("\n");
+                List<string> changedLines = new List<string>();
 
-                string face = ":;";
-                string nose = "-~";
-                string mouth = ")D";
-                int counter = 0;
-
-                foreach (string smile in smileys)
+                foreach (string line in lines)
                 {
-                    if (smile.Length < 2)
-                        continue;
-
-                    if (!face.Contains(smile[0]))
-                        continue;
-
-                    if (smile.Length == 2)
+                    string changedLine = line;
+                    foreach (string symbol in commentSymbols)
                     {
-                        if (!mouth.Contains(smile[1]))
-                            continue;
-                    }
-                    else if (smile.Length == 3)
-                    {
-                        if (!nose.Contains(smile[1]))
-                            continue;
-                        if (!mouth.Contains(smile[2]))
-                            continue;
+                        if (line.IndexOf(symbol) > -1)
+                            changedLine = line.Substring(0, line.IndexOf(symbol));
                     }
 
-                    counter++;
+                    changedLines.Add(changedLine.TrimEnd());
                 }
 
-                return counter;
+                return String.Join("\n", changedLines);
             }
         }
     }
