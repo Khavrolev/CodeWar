@@ -8,7 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int test = Kata.bouncingBall(3.0, 0.66, 1.5);
+            string test = Kata.LongestConsec(new string[] { "ejjjjmmtthh", "zxxuueeg", "aanlljrrrxx", "dqqqaaabbb", "oocccffuucccjjjkkkjyyyeehh" }, 1);
             Console.WriteLine(test);
             //foreach (string t in test)
             //{
@@ -21,18 +21,26 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static int bouncingBall(double h, double bounce, double window)
+            public static string LongestConsec(string[] strarr, int k)
             {
-                if (h <= 0 || bounce <= 0 || bounce >= 1 || window >= h)
-                    return -1;
+                if (strarr.Length == 0 || k > strarr.Length || k <= 0)
+                    return "";
 
-                int result = 1;
-                h *= bounce;
+                string result = "";
+                int step = 0;
 
-                while (h > window)
+                while (step + k <= strarr.Length)
                 {
-                    result += 2;
-                    h *= bounce;
+                    string word = "";
+                    for (int i = step; i < step + k; i++)
+                    {
+                        word += strarr[i];
+                    }
+
+                    if (word.Length > result.Length)
+                        result = word;
+
+                    step++;
                 }
 
                 return result;
