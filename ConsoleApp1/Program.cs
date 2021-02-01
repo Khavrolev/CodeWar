@@ -8,7 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string test = Kata.LongestConsec(new string[] { "ejjjjmmtthh", "zxxuueeg", "aanlljrrrxx", "dqqqaaabbb", "oocccffuucccjjjkkkjyyyeehh" }, 1);
+            int test = Kata.CountSmileys(new string[] { ":D", ":~)", ";~D", ":)" });
             Console.WriteLine(test);
             //foreach (string t in test)
             //{
@@ -21,29 +21,41 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static string LongestConsec(string[] strarr, int k)
+            public static int CountSmileys(string[] smileys)
             {
-                if (strarr.Length == 0 || k > strarr.Length || k <= 0)
-                    return "";
+                if (smileys.Length == 0)
+                    return 0;
 
-                string result = "";
-                int step = 0;
+                string face = ":;";
+                string nose = "-~";
+                string mouth = ")D";
+                int counter = 0;
 
-                while (step + k <= strarr.Length)
+                foreach (string smile in smileys)
                 {
-                    string word = "";
-                    for (int i = step; i < step + k; i++)
+                    if (smile.Length < 2)
+                        continue;
+
+                    if (!face.Contains(smile[0]))
+                        continue;
+
+                    if (smile.Length == 2)
                     {
-                        word += strarr[i];
+                        if (!mouth.Contains(smile[1]))
+                            continue;
+                    }
+                    else if (smile.Length == 3)
+                    {
+                        if (!nose.Contains(smile[1]))
+                            continue;
+                        if (!mouth.Contains(smile[2]))
+                            continue;
                     }
 
-                    if (word.Length > result.Length)
-                        result = word;
-
-                    step++;
+                    counter++;
                 }
 
-                return result;
+                return counter;
             }
         }
     }
