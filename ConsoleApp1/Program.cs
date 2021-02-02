@@ -8,7 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string test = Kata.StripComments("a #b\nc\nd $e f g", new string[] { "#", "$" });
+            int test = Kata.Score(new int[] { 4, 4, 4, 3, 3 });
             Console.WriteLine(test);
             //foreach (string t in test)
             //{
@@ -21,24 +21,28 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static string StripComments(string text, string[] commentSymbols)
+            public static int Score(int[] dice)
             {
-                string[] lines = text.Split("\n");
-                List<string> changedLines = new List<string>();
+                int[] score = new int[6];
+                int result = 0;
 
-                foreach (string line in lines)
+                foreach (int side in dice)
                 {
-                    string changedLine = line;
-                    foreach (string symbol in commentSymbols)
-                    {
-                        if (line.IndexOf(symbol) > -1)
-                            changedLine = line.Substring(0, line.IndexOf(symbol));
-                    }
-
-                    changedLines.Add(changedLine.TrimEnd());
+                    score[side - 1]++;
                 }
 
-                return String.Join("\n", changedLines);
+                for (int i = 0; i < score.Length; i++)
+                {
+                    while ((score[i] / 3) > 0)
+                    {
+                        result += (i + 1) * ((i == 0) ? 1000 : 100);
+                        score[i] -= 3;
+                    }
+
+                    result += score[i] * ((i == 0) ? 100 : (i == 4) ? 50 : 0);
+                }
+
+                return result;
             }
         }
     }
