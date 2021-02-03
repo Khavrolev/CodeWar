@@ -8,8 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            int test = Kata.Determinant(new int[][] { new[] { 10, -10, 2, 7, -3, -6 }, new[] { -8, 5, 4, -8, 10, -7 }, new[] { 0, 6, -2, 7, 7, 5 }, new[] { -6, -10, 3, -9, 2, -2 }, new[] { 8, -4, -1, 2, 1, -10 }, new[] { -3, 4, 1, 0, 10, 6 } });
-            //int test = Kata.Determinant(new int[][] { new[] { 1 } });
+            string test = Kata.sumStrings("50095301248058391139327916261", "81055900096023504197206408605");
             Console.WriteLine(test);
             //foreach (string t in test)
             //{
@@ -22,34 +21,44 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static int Determinant(int[][] matrix)
+            public static string sumStrings(string a, string b)
             {
-                int det = 0;
-                int[][] cutMatrix;
-                int k;
-                List<int> result;
+                if (a == "")
+                    a = "0";
+                if (b == "")
+                    b = "0";
 
-                if (matrix.Length == 1)
-                    det = matrix[0][0];
-                else
+                string stringA1 = "";
+                string stringA2 = "";
+                string stringB1 = "";
+                string stringB2 = "";
+
+                for (int i = 0; i < a.Length; i++)
                 {
-                    int size = matrix[0].Length;
-                    for (int i = 0; i < size; i++)
-                    {
-                        cutMatrix = new int[size - 1][];
-                        k = (-2 * (i % 2) + 1) * matrix[0][i];
-
-                        for (int j = 0; j < size - 1; j++)
-                        {
-                            result = matrix[j + 1].ToList();
-                            result.RemoveAt(i);
-                            cutMatrix[j] = result.ToArray();
-                        }
-                        
-                        det += k * Determinant(cutMatrix);
-                    }
+                    if (a.Length - i > 18)
+                        stringA1 += a[i];
+                    else
+                        stringA2 += a[i];
                 }
-                return det;
+
+                for (int i = 0; i < b.Length; i++)
+                {
+                    if (b.Length - i > 18)
+                        stringB1 += b[i];
+                    else
+                        stringB2 += b[i];
+                }
+
+                ulong ulongAB1 = ((stringA1 == "") ? 0 : UInt64.Parse(stringA1)) + ((stringB1 == "") ? 0 : UInt64.Parse(stringB1));
+                ulong ulongAB2 = UInt64.Parse(stringA2) + UInt64.Parse(stringB2);
+
+                ulongAB1 = (ulongAB2 / 1000000000000000000 > 0) ? ulongAB1 + 1 : ulongAB1;
+                ulongAB2 = (ulongAB2 / 1000000000000000000 > 0) ? ulongAB2 % 1000000000000000000 : ulongAB2;
+
+                string stringAB1 = (ulongAB1 == 0) ? "" : ulongAB1.ToString();
+                string stringAB2 = ((ulongAB2 / 100000000000000000 == 0 && ulongAB1 != 0) ? "0" : "") + ulongAB2.ToString();
+
+                return stringAB1 + stringAB2;
             }
         }
     }
