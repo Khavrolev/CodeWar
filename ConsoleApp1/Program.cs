@@ -8,7 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Dictionary<char, int> test = Kata.Count("aaaa");
+            string test = Kata.MixedFraction("64/-50");
             Console.WriteLine(test);
             //foreach (string t in test)
             //{
@@ -21,19 +21,54 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static Dictionary<char, int> Count(string str)
+            public static string MixedFraction(string s)
             {
-                Dictionary<char, int> d = new Dictionary<char, int>();
+                string[] arrS = s.Split("/");
+                long i1 = Int64.Parse(arrS[0]);
+                long i2 = Int64.Parse(arrS[1]);
 
-                foreach(char c in str)
+                if (i2 == 0)
+                    return (0 / i2).ToString();
+                else if (i1 == 0)
+                    return "0";
+                else if (i1 % i2 == 0)
+                    return (i1 / i2).ToString();
+                else
                 {
-                    if (!d.ContainsKey(c))
-                        d.Add(c, 1);
-                    else
-                        d[c]++;
-                }
+                    long counter = 2;
+                    long number = i1 / i2;
+                    while (counter <= Math.Abs(i2) / 2)
+                    {
+                        if (i1 % counter == 0 && i2 % counter == 0)
+                        {
+                            i1 /= counter;
+                            i2 /= counter;
+                        }
+                        else
+                            counter++;
+                    }
+                    if ((i1 * i2) > 0)
+                    {
+                        i1 = Math.Abs(i1);
+                        i2 = Math.Abs(i2);
 
-                return d;
+                        if (i1 < i2)
+                            return (i1 % i2).ToString() + "/" + i2.ToString();
+
+                        else
+                            return number.ToString() + " " + (i1 % i2).ToString() + "/" + i2.ToString();
+                    }
+                    else
+                    {
+                        i1 = Math.Abs(i1);
+                        i2 = Math.Abs(i2);
+
+                        if (i1 < i2)
+                            return (-i1 % i2).ToString() + "/" + i2.ToString();
+                        else
+                            return number.ToString() + " " + (i1 % i2).ToString() + "/" + i2.ToString();
+                    }
+                }
             }
         }
     }
