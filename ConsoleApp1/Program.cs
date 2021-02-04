@@ -8,7 +8,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string test = Kata.sumStrings("50095301248058391139327916261", "81055900096023504197206408605");
+            Dictionary<char, int> test = Kata.Count("aaaa");
             Console.WriteLine(test);
             //foreach (string t in test)
             //{
@@ -21,44 +21,19 @@ namespace ConsoleApp1
 
         public static class Kata
         {
-            public static string sumStrings(string a, string b)
+            public static Dictionary<char, int> Count(string str)
             {
-                if (a == "")
-                    a = "0";
-                if (b == "")
-                    b = "0";
+                Dictionary<char, int> d = new Dictionary<char, int>();
 
-                string stringA1 = "";
-                string stringA2 = "";
-                string stringB1 = "";
-                string stringB2 = "";
-
-                for (int i = 0; i < a.Length; i++)
+                foreach(char c in str)
                 {
-                    if (a.Length - i > 18)
-                        stringA1 += a[i];
+                    if (!d.ContainsKey(c))
+                        d.Add(c, 1);
                     else
-                        stringA2 += a[i];
+                        d[c]++;
                 }
 
-                for (int i = 0; i < b.Length; i++)
-                {
-                    if (b.Length - i > 18)
-                        stringB1 += b[i];
-                    else
-                        stringB2 += b[i];
-                }
-
-                ulong ulongAB1 = ((stringA1 == "") ? 0 : UInt64.Parse(stringA1)) + ((stringB1 == "") ? 0 : UInt64.Parse(stringB1));
-                ulong ulongAB2 = UInt64.Parse(stringA2) + UInt64.Parse(stringB2);
-
-                ulongAB1 = (ulongAB2 / 1000000000000000000 > 0) ? ulongAB1 + 1 : ulongAB1;
-                ulongAB2 = (ulongAB2 / 1000000000000000000 > 0) ? ulongAB2 % 1000000000000000000 : ulongAB2;
-
-                string stringAB1 = (ulongAB1 == 0) ? "" : ulongAB1.ToString();
-                string stringAB2 = ((ulongAB2 / 100000000000000000 == 0 && ulongAB1 != 0) ? "0" : "") + ulongAB2.ToString();
-
-                return stringAB1 + stringAB2;
+                return d;
             }
         }
     }
